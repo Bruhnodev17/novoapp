@@ -1,9 +1,16 @@
-import { View, Text, StyleSheet} from 'react-native'
+import { View, Text, StyleSheet, Image} from 'react-native'
 
 export default function App() {
   return(
     <View style={styles.container}>
-      <Text>Hello World DEV!</Text>
+      <Image source={require("./src/assets/logo.png")}
+      style={styles.logo} />
+
+      <Text style={styles.title}>20 caracteres</Text>
+
+      <View>
+        
+      </View>
     </View>
   )
 }
@@ -14,5 +21,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#F3F3FF",
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  logo:{
+    marginBottom:60,
+  },
+  title:{
+    fontSize: 40,
   }
 })
