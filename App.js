@@ -1,67 +1,75 @@
-import { useState } from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native'
-import Slider from '@react-native-community/slider'
+import { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Modal,
+} from "react-native";
+import Slider from "@react-native-community/slider";
+import { ModalPassword } from "./src/components/modal";
 
-let charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+let charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 export default function App() {
+  const [size, setSize] = useState(10);
+  const [passwordValue, setPasswordValue] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const [size, setSize] = useState(10)
-
-  function generatePassword(){
-
+  function generatePassword() {
     let password = "";
-    for(let i = 0, n = charset.length; i < size; i++){
-      password += charset.charAt(Math.floor(Math.random() * n))
+    for (let i = 0, n = charset.length; i < size; i++) {
+      password += charset.charAt(Math.floor(Math.random() * n));
     }
-    console.log(password)
+    setPasswordValue(password);
+    setModalVisible(true);
   }
 
-
-  return(
+  return (
     <View style={styles.container}>
-      <Image source={require("./src/assets/logo.png")}
-      style={styles.logo} />
+      <Image source={require("./src/assets/logo.png")} style={styles.logo} />
 
-      <Text style={styles.title}>{size} caracteres</Text>
+      <Text style={styles.title}>{size} Caracteres</Text>
 
       <View style={styles.area}>
-        <Slider 
-        style={{height: 50}}
-        minimumValue={6}
-        maximumValue={20}
-        maximumTrackTintColor="#ff0000"
-        minimumTrackTintColor="#000"
-        thumbTintColor="#392de9"
-        value={size}
-        onValueChange={(value) => setSize(value.toFixed(0))}
+        <Slider
+          style={{ height: 50 }}
+          minimumValue={6}
+          maximumValue={20}
+          maximumTrackTintColor="#ff0000"
+          minimumTrackTintColor="#000"
+          thumbTintColor="#392de9"
+          value={size}
+          onValueChange={(value) => setSize(value.toFixed(0))}
         />
       </View>
 
       <TouchableOpacity style={styles.button} onPress={generatePassword}>
-        <Text style={styles.buttonText}>
-          Gerar Senha
-        </Text>
+        <Text style={styles.buttonText}>Gerar Senha</Text>
       </TouchableOpacity>
-      
+
+      <Modal visible={modalVisible} animationType="Fade" transparent={true}>
+        <ModalPassword />
+      </Modal>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
+  container: {
+    flex: 1,
     backgroundColor: "#F3F3FF",
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
-  logo:{
-    marginBottom:60,
+  logo: {
+    marginBottom: 60,
   },
-  title:{
+  title: {
     fontSize: 30,
   },
-  area:{
+  area: {
     marginTop: 14,
     marginBottom: 14,
     width: "80%",
@@ -69,7 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 8,
   },
-  button:{
+  button: {
     backgroundColor: "#392de9",
     width: "80%",
     height: 50,
@@ -78,8 +86,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 18,
   },
-  buttonText:{
+  buttonText: {
     color: "#FFF",
     fontSize: 20,
   },
-})
+});
