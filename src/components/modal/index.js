@@ -1,31 +1,43 @@
-import { View, Text, StyleSheet, TouchableOpacity, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Pressable,
+} from "react-native";
 
-export function ModalPassword({password, handleClose}) {
+import * as Clipboard from "expo-clipboard";
+
+export function ModalPassword({ password, handleClose }) {
+  async function handleCopypassword() {
+    await Clipboard.setStringAsync(password);
+    alert("Senha Gravada com Sucesso!");
+
+    handleClose();
+  }
+
   return (
     <View style={styles.container}>
-        <View style={styles.content}>
-            <Text style={styles.title}>Senha Gerada</Text>
+      <View style={styles.content}>
+        <Text style={styles.title}>Senha Gerada</Text>
 
-            <Pressable style={styles.innerPassword}>
-                <Text style={styles.text}>
-                {password}
-                </Text>
-                
-            </Pressable>
+        <Pressable
+          style={styles.innerPassword}
+          onLongPress={handleCopypassword}
+        >
+          <Text style={styles.text}>{password}</Text>
+        </Pressable>
 
-            <View style={styles.buttonArea}>
-                
-                <TouchableOpacity style={styles.button} onPress={handleClose}>
-                    <Text style={styles.buttonText}>Voltar</Text>
-                </TouchableOpacity>
+        <View style={styles.buttonArea}>
+          <TouchableOpacity style={styles.button} onPress={handleClose}>
+            <Text style={styles.buttonText}>Voltar</Text>
+          </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.button, styles.buttonSave]}>
-                    <Text style={styles.buttonSaveText}>Salvar Senha</Text>
-                </TouchableOpacity>
-
-            </View>
+          <TouchableOpacity style={[styles.button, styles.buttonSave]}>
+            <Text style={styles.buttonSaveText}>Salvar Senha</Text>
+          </TouchableOpacity>
         </View>
-
+      </View>
     </View>
   );
 }
@@ -37,51 +49,51 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  content:{
+  content: {
     backgroundColor: "#FFF",
-    width:"85%",
+    width: "85%",
     paddingTop: 24,
     paddingBottom: 24,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 8,
   },
-  title:{
+  title: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#000",
     marginBottom: 24,
   },
-  innerPassword:{
+  innerPassword: {
     backgroundColor: "#0e0e0e",
     width: "90%",
     padding: 14,
     borderRadius: 8,
   },
-  text:{
+  text: {
     color: "#FFF",
-    textAlign:"center",
+    textAlign: "center",
   },
-  buttonArea:{
+  buttonArea: {
     flexDirection: "row",
     width: "90%",
     marginTop: 8,
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
-  button:{
+  button: {
     flex: 1,
     alignItems: "center",
     marginTop: 14,
-    marginBottom:14,
+    marginBottom: 14,
     padding: 8,
   },
-  buttonSave:{
+  buttonSave: {
     backgroundColor: "#392DE9",
     borderRadius: 8,
   },
-  buttonSaveText:{
+  buttonSaveText: {
     color: "#FFF",
     fontWeight: "bold",
-  }
+  },
 });
